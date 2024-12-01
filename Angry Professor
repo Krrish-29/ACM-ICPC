@@ -1,0 +1,81 @@
+void merge(int *a,int left,int middle,int right){
+    int i,j,k,n1=middle-left+1,n2=right-middle,L[n1],R[n2];
+    for(i=0;i<n1;i++){
+        L[i]=a[i+left];
+    }
+    for(j=0;j<n2;j++){
+        R[j]=a[j+middle+1];
+    }
+    for(i=0,j=0,k=left;i<n1&&j<n2;k++){
+        if(L[i]<=R[j]){
+            a[k]=L[i];
+            i++;
+        }
+        else{
+            a[k]=R[j];
+            j++;
+        }
+    }
+    while(i<n1){
+        a[k]=L[i];
+        i++;
+        k++;        
+    }
+    while(j<n2){
+        a[k]=R[j];
+        j++;
+        k++;
+    }
+}
+void sort(int *a,int left,int right){
+    if(left<right){
+        int middle=left+(right-left)/2;
+        sort(a,left,middle);
+        sort(a,middle+1,right);
+        merge(a,left,middle,right);
+    }
+}
+int binary_search(int *a,int left,int right,int target){
+    if(left<=right){
+        int middle=left+(right-left)/2;
+        if(a[middle]==target){
+            return middle;
+        }
+        else if(a[middle]>target){
+            return binary_search(a,left,middle-1,target);
+        }
+        else{
+            return binary_search(a,middle+1,right,target);
+        }
+    }
+    return -1;
+}
+char* angryProfessor(int k, int a_count, int* a) {
+    char*answer;
+    int index;
+    sort(a,0,a_count-1);
+    for(int i=0;i<a[a_count-1];i++){
+        index=binary_search(a,0,a_count-1,i);
+        if(index>-1){
+            if(i==0){
+                while(a[index+1]==a[index]){
+                    index++;
+                }
+                index++;
+            }
+            else{
+                while(a[index-1]==a[index]){
+                    index--;  
+                }  
+            }
+            break;
+        }
+    }
+    if(k<=(index)){
+        answer="NO";
+    }
+    else{
+        answer="YES";
+    }
+    return  answer;
+}
