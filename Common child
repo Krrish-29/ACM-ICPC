@@ -1,0 +1,33 @@
+//answer copied beacuse i couldnt get the right approach
+int max(int a , int b){
+    return ((a >= b)?(a):(b));
+}
+int LSC(char* s1, char* s2 , int len_1  , int len_2 , int i , int j , int ** Hash_Table)
+{
+    if(i>=len_1 || j>= len_2){
+        return 0;
+    }
+    else if ( Hash_Table[i][j] != 0 ) {
+        return Hash_Table[i][j];
+    }
+    else if(s1[i] == s2[j]){
+        int val = 1+LSC(s1 , s2 ,len_1 ,len_2 , i+1 , j+1 , Hash_Table);
+        Hash_Table[i][j] = val;
+        return val;
+    }
+    else {
+        int val = max(LSC(s1 , s2 , len_1 , len_2  , i+1 , j , Hash_Table) , LSC(s1 , s2 , len_1 , len_2 , i , j+1 , Hash_Table));
+        Hash_Table[i][j] = val;
+        return val;  
+        }
+}
+int commonChild(char* s1, char* s2) {
+    int len_1 = strlen(s1) , len_2 = strlen(s2);
+    
+    int ** Hash_Table = calloc(len_1, sizeof(int*));
+    for (int i = 0; i<len_1 ; i++) {
+        Hash_Table[i] = calloc(len_2, sizeof(int));
+    }
+        
+    return LSC(s1, s2 ,len_1 , len_2 , 0 , 0 , Hash_Table);
+}
