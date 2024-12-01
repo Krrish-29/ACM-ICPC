@@ -1,8 +1,0 @@
-int saveThePrisoner(int n, int m, int s) {
-    if(((m%n)+s-1)==0||((m%n)+s-1)==n){
-        return n;
-    }
-    else{
-        return ((m%n)+s-1)%n;
-    }
-}
