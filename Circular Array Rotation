@@ -1,0 +1,13 @@
+int* circularArrayRotation(int a_count, int* a, int k, int queries_count, int* queries, int* result_count) {
+    *result_count=queries_count;
+    int *answer=(int*)calloc(queries_count,sizeof(int));
+    for(int i=0;i<queries_count;i++){
+        if((k%a_count)<=queries[i]){
+            answer[i]=a[queries[i]-(k%a_count)];
+        }
+        else{
+            answer[i]=a[a_count-(k%a_count)+queries[i]];
+        }
+    }
+    return answer;
+}
