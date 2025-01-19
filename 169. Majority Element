@@ -1,0 +1,14 @@
+int majorityElement(vector<int>& nums) {
+        int major_element=nums[0],times=1;
+        for(int i=1;i<nums.size();i++){
+            if(major_element==nums[i])
+                times++;
+            else
+                times--;
+            if(times==-1){
+                major_element=nums[i];
+                times=1;
+            }
+        }
+        return major_element;
+}
